@@ -64,30 +64,66 @@ const numbers = {
 // console.log(convertToRoman(45));
 
 // method 2
+// function convertToRoman(num) {
+//     const sequence = num.toString().split('');
+//     let pow = sequence.length - 1;
+//     num = sequence.reduce((arr, strNumber) => {
+//         const number = parseInt(strNumber);
+//         let int = number * 10**pow;
+//         let temp_arr = [];
+
+//         while(!numbers[int] && int > 0) {
+//             int = int - 10**pow;
+//             temp_arr.push(10**pow);
+//         }
+
+//         if(int > 0) {
+//             arr = [...arr, int, ...temp_arr];
+//         }
+
+//         pow -= 1;
+//         return arr;
+//     }, []);
+
+//     num = num.map(elem => numbers[elem]).join('');
+
+//     return num;
+// }
+
+// console.log(convertToRoman(3999));
+
+// method 3
 function convertToRoman(num) {
-    const sequence = num.toString().split('');
-    let pow = sequence.length - 1;
-    num = sequence.reduce((arr, strNumber) => {
-        const number = parseInt(strNumber);
-        let int = number * 10**pow;
-        let temp_arr = [];
-
-        while(!numbers[int] && int > 0) {
-            int = int - 10**pow;
-            temp_arr.push(10**pow);
+    const sequence = [];
+    let pow = num.toString().length - 1;
+    let remainder = num % 10**pow;
+    
+    while (remainder > 0) {
+        if (num - remainder > 0) {
+            sequence.push(num - remainder);
         }
-
-        if(int > 0) {
-            arr = [...arr, int, ...temp_arr];
-        }
-
+        num = remainder;
         pow -= 1;
-        return arr;
-    }, []);
+        if (pow === 0) sequence.push(remainder);
+        remainder = remainder % 10**pow;
+    }
 
-    num = num.map(elem => numbers[elem]).join('');
+    num = sequence.reduce((arr, current) => {
+        let temp_arr = [];
+        while (!numbers[current]) {
+            let len = 10**(current.toString().length - 1);
+            current = current - len;
+            temp_arr.push(numbers[len]);
+        }
+
+        return [
+            ...arr,
+            numbers[current],
+            ...temp_arr
+        ];
+    }, []).join('');
 
     return num;
 }
 
-console.log(convertToRoman(3999));
+console.log(convertToRoman(45));
