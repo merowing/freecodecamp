@@ -12,35 +12,41 @@ function checkCashRegister(price, cash, cid) {
         ["ONE HUNDRED", 100]
     ];
 
-    let difference = parseFloat((cash - price).toFixed(2));
+    let difference = fixedValue(cash - price);
     let status = statusString[0];
     let moneyLeft = false;
 
-    let change = [...cid].reverse().reduce((arr, cid_unit) => {
-        let [currency, value] = cid_unit;
-        const [[, unit_value]] = units.filter(item => item[0] === currency);
-        
-        if(difference >= unit_value && value > 0) {
-            let money = 0;
-            while(difference >= unit_value && value > 0) {
-                difference = parseFloat((difference - unit_value).toFixed(2));
-                
-                money = parseFloat((money + unit_value).toFixed(2));
-                value = parseFloat((value - unit_value).toFixed(2));
+    function fixedValue(val) {
+        return parseFloat(val.toFixed(2));
+    }
+
+    let change = [...cid]
+        .reverse()
+        .reduce((arr, cid_unit) => {
+            let [cid_currency, cid_value] = cid_unit;
+            const [[, unit_value]] = units.filter(item => item[0] === cid_currency);
+            
+            if (difference >= unit_value && cid_value > 0) {
+                let money = 0;
+                while (difference >= unit_value && cid_value > 0) {
+                    difference = fixedValue(difference - unit_value);
+                    
+                    money = fixedValue(money + unit_value);
+                    cid_value = fixedValue(cid_value - unit_value);
+                }
+                arr.push([cid_currency, money]);
             }
-            arr.push([currency, money]);
-        }
 
-        if(value > 0) moneyLeft = true;
+            if (cid_value > 0) moneyLeft = true;
 
-        return arr;
-    }, []);
+            return arr;
+        }, []);
 
-    if(difference > 0) {
+    if (difference > 0) {
         status = statusString[2];
         change = [];
     }
-    if(difference === 0 && !moneyLeft) {
+    if (difference === 0 && !moneyLeft) {
         status = statusString[1];
         change = [...cid];
     }
@@ -55,14 +61,14 @@ console.log(checkCashRegister(
     19.5,
     20,
     [
-        ["PENNY", 0.5],
-        ["NICKEL", 0],
-        ["DIME", 0],
-        ["QUARTER", 0],
-        ["ONE", 0],
-        ["FIVE", 0],
-        ["TEN", 0],
-        ["TWENTY", 0],
-        ["ONE HUNDRED", 0]
+        ["PENNY", 1.01],
+        ["NICKEL", 2.05],
+        ["DIME", 3.1],
+        ["QUARTER", 4.25],
+        ["ONE", 90],
+        ["FIVE", 55],
+        ["TEN", 20],
+        ["TWENTY", 60],
+        ["ONE HUNDRED", 100]
     ]
 ));
