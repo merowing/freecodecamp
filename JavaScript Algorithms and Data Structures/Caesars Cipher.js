@@ -26,16 +26,35 @@
 // }
 
 // method 2
-function rot13(str) {
-    let letters = 'abcdefghijklmnopqrstuvwxyzabcdefghijklm';
+// function rot13(str) {
+//     const letters = 'abcdefghijklmnopqrstuvwxyzabcdefghijklm';
 
-    str = str.toLowerCase().replace(/[a-z]/g, (p) => {
-        let ind = letters.indexOf(p) + 13;
-        return letters[ind];
-    });
-    str = str.toUpperCase();
+//     str = str
+//         .toLowerCase()
+//         .replace(/[a-z]/g, (p) => {
+//             const ind = letters.indexOf(p) + 13;
+//             return letters[ind];
+//         })
+//         .toUpperCase();
+
+//     return str;
+// }
+
+// method 3
+function rot13(str) {
+    str = str
+        .toLowerCase()
+        .replace(/[a-z]/g, (p) => {
+            const code = p.charCodeAt();
+            const num = (code > 109)
+                ? code - 13
+                : code + 13;
+            
+            return String.fromCharCode(num);
+        })
+        .toUpperCase();
 
     return str;
 }
 
-console.log(rot13('free pizza!'));
+console.log(rot13("GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT."));
