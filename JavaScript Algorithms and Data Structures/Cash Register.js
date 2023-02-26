@@ -123,12 +123,13 @@ function checkCashRegister(price, cash, cid) {
             );
         }
     }
-    change.reverse();
 
-    if (drawerCash === 0) {
+    if (drawerCash === 0 && difference === 0) {
         status = statusString[1];
+        change = cid.reverse();
     }
-    if (drawerCash > 0 && difference > 0) {
+    
+    if (difference > 0) {
         status = statusString[2];
         change = [];
     }
@@ -140,5 +141,5 @@ function checkCashRegister(price, cash, cid) {
 }
 
 console.log(checkCashRegister(
-    18.54, 20, [["PENNY", 0.01], ["NICKEL", 0.1], ["DIME", 0.1], ["QUARTER", 0.25], ["ONE", 1], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]
+    19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]
 ));
