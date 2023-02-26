@@ -1,44 +1,44 @@
 // method 1
-// function rot13(str) {
-//     const code = 'abcdefghijklmnopqrstuvwxyz';
-//     let decode = '';
+function rot13(str) {
+    const code = 'abcdefghijklmnopqrstuvwxyz';
+    let decode = '';
 
-//     str = str.toLowerCase();
-//     for (let char of str) {
-//         let ind = code.indexOf(char);
+    str = str.toLowerCase();
+    for (let char of str) {
+        let ind = code.indexOf(char);
 
-//         if (ind >= 0) {
-//             if (ind >= 13) {
-//                 ind -= 13
-//             } else {
-//                 ind += 13;
-//             }
-//         }
+        if (ind >= 0) {
+            if (ind >= 13) {
+                ind -= 13
+            } else {
+                ind += 13;
+            }
+        }
         
-//         decode += (ind >= 0)
-//             ? code[ind]
-//             : char;
+        decode += (ind >= 0)
+            ? code[ind]
+            : char;
 
-//         decode = decode.toUpperCase();
-//     }
+        decode = decode.toUpperCase();
+    }
     
-//     return decode;
-// }
+    return decode;
+}
 
 // method 2
-// function rot13(str) {
-//     const letters = 'abcdefghijklmnopqrstuvwxyzabcdefghijklm';
+function rot13(str) {
+    const letters = 'abcdefghijklmnopqrstuvwxyzabcdefghijklm';
 
-//     str = str
-//         .toLowerCase()
-//         .replace(/[a-z]/g, (p) => {
-//             const ind = letters.indexOf(p) + 13;
-//             return letters[ind];
-//         })
-//         .toUpperCase();
+    str = str
+        .toLowerCase()
+        .replace(/[a-z]/g, (p) => {
+            const ind = letters.indexOf(p) + 13;
+            return letters[ind];
+        })
+        .toUpperCase();
 
-//     return str;
-// }
+    return str;
+}
 
 // method 3
 function rot13(str) {
@@ -57,4 +57,4 @@ function rot13(str) {
     return str;
 }
 
-console.log(rot13("GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT."));
+console.log(rot13("free pizza!"));
